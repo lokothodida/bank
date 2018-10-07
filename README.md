@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/lokothodida/bank.svg?branch=master)](https://travis-ci.org/lokothodida/bank)
+
 # Sample Banking App
 A small application and domain model for a banking
 system with the following actions:
