@@ -25,5 +25,5 @@ cd sqlite-adapter && composer install && cd ../
 ```
 
 ## TODO
-[ ] Integrate Travis CI with the build
-[ ] Create terminal UI app
+- [x] Integrate Travis CI with the build
+- [ ] Create terminal UI app
