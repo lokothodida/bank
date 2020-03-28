@@ -2,7 +2,6 @@
 
 namespace lokothodida\Bank\Domain\Exception;
 
-use DomainException;
 use Throwable;
 
 final class InsufficientFunds extends DomainException

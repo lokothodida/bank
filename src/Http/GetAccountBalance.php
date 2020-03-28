@@ -2,7 +2,7 @@
 
 namespace lokothodida\Bank\Http;
 
-use lokothodida\Bank\Domain\Exception\AccountNotFound;
+use lokothodida\Bank\Query\Exception\AccountNotFound;
 use lokothodida\Bank\Query\GetAccountBalance as GetAccountBalanceQuery;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

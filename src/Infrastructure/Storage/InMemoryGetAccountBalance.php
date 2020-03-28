@@ -6,6 +6,7 @@ namespace lokothodida\Bank\Infrastructure\Storage;
 use lokothodida\Bank\Domain\Event;
 use lokothodida\Bank\Infrastructure\Publisher\EventPublisher;
 use lokothodida\Bank\Query\AccountBalance;
+use lokothodida\Bank\Query\Exception\AccountNotFound;
 use lokothodida\Bank\Query\GetAccountBalance;
 use lokothodida\Bank\Domain\Event\AccountOpened;
 use lokothodida\Bank\Domain\Event\FundsDeposited;
@@ -17,6 +18,10 @@ class InMemoryGetAccountBalance implements GetAccountBalance, EventPublisher
 
     public function __invoke(string $accountId): AccountBalance
     {
+        if (!isset($this->balances[$accountId])) {
+            throw new AccountNotFound($accountId);
+        }
+
         return $this->balances[$accountId];
     }
 

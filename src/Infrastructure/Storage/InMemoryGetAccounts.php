@@ -8,6 +8,7 @@ use lokothodida\Bank\Domain\Event;
 use lokothodida\Bank\Domain\Event\AccountOpened;
 use lokothodida\Bank\Infrastructure\Publisher\EventPublisher;
 use lokothodida\Bank\Query\Account as AccountView;
+use lokothodida\Bank\Query\Exception\CustomerNotFound;
 use lokothodida\Bank\Query\GetAccounts;
 
 final class InMemoryGetAccounts implements GetAccounts, EventPublisher
@@ -20,7 +21,7 @@ final class InMemoryGetAccounts implements GetAccounts, EventPublisher
     public function __invoke(string $customerId): array
     {
         if (!isset($this->customers[$customerId])) {
-            return [];
+            throw new CustomerNotFound($customerId);
         }
 
         return $this->customers[$customerId];

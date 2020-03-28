@@ -2,7 +2,6 @@
 
 namespace lokothodida\Bank\Http;
 
-use lokothodida\Bank\Command\DepositIntoAccount;
 use lokothodida\Bank\Command\WithdrawFromAccount;
 use lokothodida\Bank\Domain\Exception\AccountNotFound;
 use lokothodida\Bank\Domain\Exception\DomainException;

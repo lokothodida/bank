@@ -4,6 +4,7 @@ namespace lokothodida\Bank\Infrastructure\Storage;
 
 use lokothodida\Bank\Domain\Event;
 use lokothodida\Bank\Infrastructure\Publisher\EventPublisher;
+use lokothodida\Bank\Query\Exception\AccountNotFound;
 use lokothodida\Bank\Query\GetTransactions;
 use lokothodida\Bank\Domain\Event\AccountOpened;
 use lokothodida\Bank\Domain\Event\FundsDeposited;
@@ -19,6 +20,10 @@ final class InMemoryGetTransactions implements GetTransactions, EventPublisher
 
     public function __invoke(string $accountId): array
     {
+        if (!isset($this->accounts[$accountId])) {
+            throw new AccountNotFound($accountId);
+        }
+
         return $this->accounts[$accountId];
     }
 
