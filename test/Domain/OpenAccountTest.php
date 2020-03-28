@@ -1,5 +1,8 @@
 <?php
 
+namespace lokothodida\BankTest\Domain;
+
+use DateTimeImmutable;
 use lokothodida\Bank\Domain\Account;
 use lokothodida\Bank\Domain\Event\AccountFrozen;
 use lokothodida\Bank\Domain\Event\AccountOpened;
