@@ -38,4 +38,12 @@ final class ClosedAccountTest extends TestCase
             ->close(new DateTimeImmutable())
             ->unfreeze(new DateTimeImmutable());
     }
+
+    public function testCannotBeReClosed(): void
+    {
+        $this->expectExceptionMessage('Account already closed');
+        Account::open('account-id', 'customer-id', new DateTimeImmutable())
+            ->close(new DateTimeImmutable())
+            ->close(new DateTimeImmutable());
+    }
 }

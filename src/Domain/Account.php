@@ -65,6 +65,10 @@ final class Account
 
     public function freeze(DateTimeInterface $time): Account
     {
+        if ($this->isFrozen()) {
+            throw new DomainException('Account already frozen');
+        }
+
         if ($this->isClosed()) {
             throw new DomainException('Account closed');
         }
@@ -89,6 +93,10 @@ final class Account
 
     public function close(DateTimeInterface $time): Account
     {
+        if ($this->isClosed()) {
+            throw new DomainException('Account already closed');
+        }
+
         if ($this->balance()->greaterThan(new Money(0))) {
             throw new DomainException('Non-zero balance');
         }

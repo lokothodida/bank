@@ -1,6 +1,7 @@
 <?php
 
 use lokothodida\Bank\Domain\Account;
+use lokothodida\Bank\Domain\Event\AccountFrozen;
 use lokothodida\Bank\Domain\Event\AccountOpened;
 use lokothodida\Bank\Domain\Event\FundsDeposited;
 use lokothodida\Bank\Domain\Event\FundsWithdrawn;
@@ -56,5 +57,22 @@ final class OpenAccountTest extends TestCase
         Account::open('account-id', 'customer-id', new DateTimeImmutable())
             ->deposit(new Money(100), new DateTimeImmutable())
             ->close(new DateTimeImmutable());
+    }
+
+    public function testCanBeFrozen(): void
+    {
+        $account = Account::open('account-id', 'customer-id', $openedAt = new DateTimeImmutable());
+        $frozen = $account
+            ->deposit(new Money(100), $depositedAt = new DateTimeImmutable())
+            ->freeze($frozenAt = new DateTimeImmutable());
+
+        $this->assertEquals(
+            Account::withHistory(
+                new AccountOpened('account-id', 'customer-id', $openedAt),
+                new FundsDeposited(new Money(100), $depositedAt),
+                new AccountFrozen($frozenAt),
+            ),
+            $frozen
+        );
     }
 }

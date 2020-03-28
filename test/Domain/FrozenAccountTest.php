@@ -36,6 +36,14 @@ final class FrozenAccountTest extends TestCase
             ->withdraw(new Money(1), new DateTimeImmutable());
     }
 
+    public function testCannotBeReFrozen(): void
+    {
+        $this->expectExceptionMessage('Account already frozen');
+        Account::open('account-id', 'customer-id', new DateTimeImmutable())
+            ->freeze(new DateTimeImmutable())
+            ->freeze(new DateTimeImmutable());
+    }
+
     public function testCanBeUnfrozen(): void
     {
         $account = Account::open('account-id', 'customer-id', $openedAt = new DateTimeImmutable());
