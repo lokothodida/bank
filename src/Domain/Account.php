@@ -10,6 +10,7 @@ use lokothodida\Bank\Domain\Event\AccountOpened;
 use lokothodida\Bank\Domain\Event\AccountUnfrozen;
 use lokothodida\Bank\Domain\Event\FundsDeposited;
 use lokothodida\Bank\Domain\Event\FundsWithdrawn;
+use lokothodida\Bank\Domain\Exception\InsufficientFunds;
 
 final class Account
 {
@@ -42,7 +43,7 @@ final class Account
     public function deposit(Money $funds, DateTimeInterface $time): Account
     {
         if ($this->isClosed()) {
-            throw new DomainException('Account closed');
+            throw new Exception\AccountClosed();
         }
 
         return new Account(
@@ -54,15 +55,15 @@ final class Account
     public function withdraw(Money $funds, DateTimeInterface $time): Account
     {
         if ($this->isClosed()) {
-            throw new DomainException('Account closed');
+            throw new Exception\AccountClosed();
         }
 
         if ($this->isFrozen()) {
-            throw new DomainException('Account frozen');
+            throw new Exception\AccountFrozen();
         }
 
         if ($this->balance()->lessThan($funds)) {
-            throw new DomainException('Insufficient funds');
+            throw new InsufficientFunds();
         }
 
         return new Account(
@@ -78,7 +79,7 @@ final class Account
         }
 
         if ($this->isClosed()) {
-            throw new DomainException('Account closed');
+            throw new Exception\AccountClosed();
         }
 
         return new Account(
@@ -90,7 +91,7 @@ final class Account
     public function unfreeze(DateTimeInterface $time): Account
     {
         if ($this->isClosed()) {
-            throw new DomainException('Account closed');
+            throw new Exception\AccountClosed();
         }
 
         return new Account(

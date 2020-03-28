@@ -4,6 +4,7 @@ namespace lokothodida\Bank\Infrastructure\Storage;
 
 use lokothodida\Bank\Domain\Account;
 use lokothodida\Bank\Domain\AccountRepository;
+use lokothodida\Bank\Domain\Exception\AccountNotFound;
 
 final class InMemoryAccountRepository implements AccountRepository
 {
@@ -17,6 +18,10 @@ final class InMemoryAccountRepository implements AccountRepository
 
     public function get(string $accountId): Account
     {
+        if (!isset($this->accounts[$accountId])) {
+            throw new AccountNotFound($accountId);
+        }
+
         return $this->accounts[$accountId];
     }
 
