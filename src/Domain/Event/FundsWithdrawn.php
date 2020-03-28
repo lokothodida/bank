@@ -22,4 +22,9 @@ final class FundsWithdrawn extends Event
     {
         return $this->funds;
     }
+
+    public function occurredAt(): DateTimeInterface
+    {
+        return $this->withdrawnAt;
+    }
 }

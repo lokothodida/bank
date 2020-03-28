@@ -28,4 +28,9 @@ final class AccountOpened extends Event
     {
         return $this->customerId;
     }
+
+    public function occurredAt(): DateTimeInterface
+    {
+        return $this->openedAt;
+    }
 }

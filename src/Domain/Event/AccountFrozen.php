@@ -13,4 +13,9 @@ final class AccountFrozen extends Event
     {
         $this->frozenAt = $frozenAt;
     }
+
+    public function occurredAt(): DateTimeInterface
+    {
+        return $this->frozenAt;
+    }
 }

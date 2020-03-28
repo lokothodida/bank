@@ -7,10 +7,15 @@ use lokothodida\Bank\Domain\Event;
 
 final class AccountClosed extends Event
 {
-    private DateTimeInterface $frozenAt;
+    private DateTimeInterface $closedAt;
 
-    public function __construct(DateTimeInterface $frozenAt)
+    public function __construct(DateTimeInterface $closedAt)
     {
-        $this->frozenAt = $frozenAt;
+        $this->closedAt = $closedAt;
+    }
+
+    public function occurredAt(): DateTimeInterface
+    {
+        return $this->closedAt;
     }
 }

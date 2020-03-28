@@ -21,4 +21,9 @@ final class FundsDeposited extends Event
     {
         return $this->funds;
     }
+
+    public function occurredAt(): DateTimeInterface
+    {
+        return $this->depositedAt;
+    }
 }
