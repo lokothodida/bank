@@ -4,6 +4,7 @@ namespace lokothodida\Bank\Domain;
 
 use DateTimeInterface;
 use DomainException;
+use lokothodida\Bank\Domain\Event\AccountClosed;
 use lokothodida\Bank\Domain\Event\AccountFrozen;
 use lokothodida\Bank\Domain\Event\AccountOpened;
 use lokothodida\Bank\Domain\Event\AccountUnfrozen;
@@ -32,6 +33,10 @@ final class Account
 
     public function deposit(Money $funds, DateTimeInterface $time): Account
     {
+        if ($this->isClosed()) {
+            throw new DomainException('Account closed');
+        }
+
         return new Account(
             new FundsDeposited($funds, $time),
             ...$this->history,
@@ -40,6 +45,10 @@ final class Account
 
     public function withdraw(Money $funds, DateTimeInterface $time): Account
     {
+        if ($this->isClosed()) {
+            throw new DomainException('Account closed');
+        }
+
         if ($this->isFrozen()) {
             throw new DomainException('Account frozen');
         }
@@ -56,6 +65,10 @@ final class Account
 
     public function freeze(DateTimeInterface $time): Account
     {
+        if ($this->isClosed()) {
+            throw new DomainException('Account closed');
+        }
+
         return new Account(
             new AccountFrozen($time),
             ...$this->history
@@ -64,15 +77,22 @@ final class Account
 
     public function unfreeze(DateTimeInterface $time): Account
     {
+        if ($this->isClosed()) {
+            throw new DomainException('Account closed');
+        }
+
         return new Account(
             new AccountUnfrozen($time),
             ...$this->history
         );
     }
 
-    public function close(): Account
+    public function close(DateTimeInterface $time): Account
     {
-        return new Account();
+        return new Account(
+            new AccountClosed($time),
+            ...$this->history
+        );
     }
 
     private function balance(): Money
@@ -103,6 +123,22 @@ final class Account
                         return true;
                     default:
                         return $isFrozen;
+                }
+            },
+            false
+        );
+    }
+
+    private function isClosed(): bool
+    {
+        return array_reduce(
+            array_reverse($this->history),
+            function(bool $isClosed, Event $event): bool {
+                switch (get_class($event)) {
+                    case AccountClosed::class:
+                        return true;
+                    default:
+                        return $isClosed;
                 }
             },
             false
