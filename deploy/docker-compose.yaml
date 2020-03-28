@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  bank-http-server:
+    command: "php -S 0.0.0.0:${HTTP_PORT} -t ./public"
+    build:
+      context: ./
+    working_dir: /server
+    volumes:
+      - ./..:/server
+    ports:
+      - ${HTTP_PORT}:${HTTP_PORT}
+#
+#  bank-console:
+#    build:
+#      context: ./
+#    working_dir: /server
+#    volumes:
+#      - ./..:/server
