@@ -13,7 +13,12 @@
             "email": "lawrence.okothodida@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.0",
+        "react/event-loop": "^1.1",
+        "react/http": "^0.8.6"
+    },
     "autoload": {
         "psr-4": {
             "lokothodida\\Bank\\": "src"

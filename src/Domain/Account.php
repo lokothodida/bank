@@ -31,6 +31,14 @@ final class Account
         return new Account(...array_reverse($history));
     }
 
+    /**
+     * @return Event[]
+     */
+    public function history(): array
+    {
+        return array_reverse($this->history);
+    }
+
     public function deposit(Money $funds, DateTimeInterface $time): Account
     {
         if ($this->isClosed()) {

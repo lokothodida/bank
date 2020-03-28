@@ -11,6 +11,11 @@ final class Money
         $this->amount = $amount;
     }
 
+    public function amount(): int
+    {
+        return $this->amount;
+    }
+
     public function add(Money $money): Money
     {
         return new Money($this->amount + $money->amount);

@@ -18,4 +18,14 @@ final class AccountOpened extends Event
         $this->customerId = $customerId;
         $this->openedAt = $openedAt;
     }
+
+    public function accountId(): string
+    {
+        return $this->accountId;
+    }
+
+    public function customerId(): string
+    {
+        return $this->customerId;
+    }
 }
