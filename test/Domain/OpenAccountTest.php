@@ -48,4 +48,13 @@ final class OpenAccountTest extends TestCase
             ->deposit(new Money(100), new DateTimeImmutable())
             ->withdraw(new Money(101), new DateTimeImmutable());
     }
+
+    public function testCannotBeClosedWhenBalanceIsNonZero(): void
+    {
+        $this->expectExceptionMessage('Non-zero balance');
+
+        Account::open('account-id', 'customer-id', new DateTimeImmutable())
+            ->deposit(new Money(100), new DateTimeImmutable())
+            ->close(new DateTimeImmutable());
+    }
 }

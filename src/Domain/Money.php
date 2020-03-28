@@ -25,4 +25,9 @@ final class Money
     {
         return $this->amount < $money->amount;
     }
+
+    public function greaterThan(Money $money): bool
+    {
+        return $this->amount > $money->amount;
+    }
 }

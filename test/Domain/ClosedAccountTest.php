@@ -18,7 +18,6 @@ final class ClosedAccountTest extends TestCase
     {
         $this->expectExceptionMessage('Account closed');
         Account::open('account-id', 'customer-id', new DateTimeImmutable())
-            ->deposit(new Money(101), new DateTimeImmutable())
             ->close(new DateTimeImmutable())
             ->withdraw(new Money(100), new DateTimeImmutable());
     }

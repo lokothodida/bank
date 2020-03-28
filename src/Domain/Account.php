@@ -89,6 +89,10 @@ final class Account
 
     public function close(DateTimeInterface $time): Account
     {
+        if ($this->balance()->greaterThan(new Money(0))) {
+            throw new DomainException('Non-zero balance');
+        }
+
         return new Account(
             new AccountClosed($time),
             ...$this->history
