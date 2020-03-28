@@ -4,6 +4,7 @@ namespace lokothodida\Bank\Http;
 
 use lokothodida\Bank\Command\DepositIntoAccount;
 use lokothodida\Bank\Domain\Exception\AccountNotFound;
+use lokothodida\Bank\Domain\Exception\DomainException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -36,6 +37,11 @@ final class PostAccountDeposit
             $status = 404;
             $body = [
                 'message' => $e->getMessage(),
+            ];
+        } catch (DomainException $e) {
+            $status = 422;
+            $body = [
+                'message' => $e->getMessage()
             ];
         }
 
