@@ -3,7 +3,6 @@
 
 namespace lokothodida\Bank\Domain\Event;
 
-
 use DateTimeInterface;
 use lokothodida\Bank\Domain\Event;
 use lokothodida\Bank\Domain\Money;

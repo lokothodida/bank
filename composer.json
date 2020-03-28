@@ -4,7 +4,8 @@
     "type": "project",
     "require-dev": {
         "phpunit/phpunit": "^9.0",
-        "phpstan/phpstan": "^0.12.18"
+        "phpstan/phpstan": "^0.12.18",
+        "friendsofphp/php-cs-fixer": "^2.16"
     },
     "authors": [
         {
@@ -24,8 +25,9 @@
         }
     },
     "scripts": {
-      "test": [ "@static-analysis", "@unit-test" ],
-      "unit-test": [ "phpunit test -vv --testdox" ],
-      "static-analysis": [ "phpstan analyse src test --level=7" ]
+        "test": [ "@static-analysis", "@unit-test" ],
+        "unit-test": [ "phpunit test -vv --testdox" ],
+        "static-analysis": [ "phpstan analyse src test --level=7" ],
+        "fmt": [ "php-cs-fixer fix src" ]
     }
 }

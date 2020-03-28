@@ -111,7 +111,7 @@ final class Account
     {
         return array_reduce(
             array_reverse($this->history),
-            function(Money $sum, Event $event): Money {
+            function (Money $sum, Event $event): Money {
                 switch (get_class($event)) {
                     case FundsDeposited::class:
                         return $sum->add($event->funds());
@@ -129,7 +129,7 @@ final class Account
     {
         return array_reduce(
             array_reverse($this->history),
-            function(bool $isFrozen, Event $event): bool {
+            function (bool $isFrozen, Event $event): bool {
                 switch (get_class($event)) {
                     case AccountFrozen::class:
                         return true;
@@ -145,7 +145,7 @@ final class Account
     {
         return array_reduce(
             array_reverse($this->history),
-            function(bool $isClosed, Event $event): bool {
+            function (bool $isClosed, Event $event): bool {
                 switch (get_class($event)) {
                     case AccountClosed::class:
                         return true;
