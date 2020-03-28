@@ -1,13 +1,11 @@
 <?php
 
-
 namespace lokothodida\Bank\Command;
-
 
 use lokothodida\Bank\Domain\AccountRepository;
 use lokothodida\Bank\Domain\Clock;
 
-class FreezeAccount
+final class FreezeAccount
 {
     private AccountRepository $accounts;
     private Clock $clock;

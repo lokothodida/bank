@@ -1,14 +1,12 @@
 <?php
 
-
 namespace lokothodida\Bank\Command;
-
 
 use lokothodida\Bank\Domain\AccountRepository;
 use lokothodida\Bank\Domain\Clock;
 use lokothodida\Bank\Domain\Money;
 
-class WithdrawFromAccount
+final class WithdrawFromAccount
 {
     private AccountRepository $accounts;
     private Clock $clock;
