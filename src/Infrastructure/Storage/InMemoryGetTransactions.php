@@ -38,14 +38,14 @@ final class InMemoryGetTransactions implements GetTransactions, EventPublisher
                 $transaction->amount = $event->funds()->amount();
                 $transaction->date = $event->occurredAt()->format('c');
 
-                $this->accounts[$accountId][] = $transaction;
+                array_unshift($this->accounts[$accountId], $transaction);
                 break;
             case FundsWithdrawn::class:
                 $transaction = new Transaction();
                 $transaction->amount = -$event->funds()->amount();
                 $transaction->date = $event->occurredAt()->format('c');
 
-                $this->accounts[$accountId][] = $transaction;
+                array_unshift($this->accounts[$accountId], $transaction);
                 break;
         }
     }
