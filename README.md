@@ -1,11 +1,11 @@
 # Sample Banking App
 This is a small toy banking application designed to illustrate some software design concepts.
 
-* **Domain driven design** - the domain is a very crude, simplified look at a Bank that offers accounts.
-* **Clean/hexagonal architecture** - the storage mechanism and web server are easily replaceable - they are *plugins* to the main application.
-* **CQRS** - application commands and queries are separated within the codebase.
-* **Event sourcing** - events are persisted, rather than current state, meaning that current state is a projection of the stream of events.
-  There are multiple views of the same event store. (e.g. `accounts`, `transactions`, `balance`)
+* [Domain driven design](https://en.wikipedia.org/wiki/Domain-driven_design) - the domain is a very crude, simplified look at a Bank that offers accounts.
+* [Clean/hexagonal architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) - the storage mechanism and web server are easily replaceable - they are *plugins* to the main application.
+* [CQRS](https://martinfowler.com/bliki/CQRS.html) - application commands and queries are separated within the codebase.
+* [Event sourcing](https://www.youtube.com/watch?v=I3uH3iiiDqY) - events are persisted, rather than current state, meaning that current state is a projection of the stream of events.
+  There are multiple views of the same event store (e.g. `accounts`, `transactions`, `balance`).
 
 ## Use cases
 - [x] Open an account
