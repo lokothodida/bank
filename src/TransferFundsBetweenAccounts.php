@@ -2,6 +2,8 @@
 
 namespace lokothodida\Bank;
 
+use lokothodida\Bank\Domain\BankTransfer;
+use lokothodida\Bank\Domain\BankTransferRepository;
 use lokothodida\Bank\Domain\Clock;
 use lokothodida\Bank\Domain\Event\BankTransferInitiated;
 use lokothodida\Bank\Domain\Event\FailedToTransferFundsIn;
@@ -15,70 +17,53 @@ final class TransferFundsBetweenAccounts
     private DepositIntoAccount $deposit;
     private Clock $clock;
     private EventPublisher $publisher;
+    private BankTransferRepository $transfers;
 
     public function __construct(
         WithdrawFromAccount $withdraw,
         DepositIntoAccount $deposit,
         Clock $clock,
-        EventPublisher $publisher
+        EventPublisher $publisher,
+        BankTransferRepository $transfers
     ) {
         $this->withdraw = $withdraw;
         $this->deposit = $deposit;
         $this->clock = $clock;
         $this->publisher = $publisher;
+        $this->transfers = $transfers;
         $this->declareProcess();
     }
 
     public function __invoke(string $senderAccountId, string $recipientAccountId, int $amount): void
     {
-        $this->publisher->publish(new BankTransferInitiated(
-            $senderAccountId,
-            $recipientAccountId,
-            new Money($amount),
-            $this->clock->now()
-        ));
+        $this->transfers->set(
+            $transferId = $this->transfers->newTransferId(),
+            BankTransfer::initiate($transferId, $senderAccountId, $recipientAccountId, new Money($amount), $this->clock->now())
+        );
     }
 
     private function declareProcess(): void
     {
         $this->publisher->on(BankTransferInitiated::class, function (BankTransferInitiated $event) {
-            $this->transferFundsOut($event->senderAccountId(), $event->funds()->amount());
-            $this->publisher->publish(new FundsTransferredOut(
-                $event->senderAccountId(),
-                $event->recipientAccountId(),
-                $event->funds(),
-                $this->clock->now()
-            ));
+            $transfer = $this->transfers->get($event->transferId());
+            $this->transfers->set(
+                $event->transferId(),
+                $transfer->transferOut($this->withdraw, $this->clock)
+            );
         });
         $this->publisher->on(FundsTransferredOut::class, function (FundsTransferredOut $event) {
-            try {
-                $this->transferFundsIn($event->recipientAccountId(), $event->funds()->amount());
-            } catch (\Exception $e) {
-                $this->publisher->publish(new FailedToTransferFundsIn(
-                    $event->senderAccountId(),
-                    $event->recipientAccountId(),
-                    $event->funds(),
-                    $this->clock->now()
-                ));
-            }
+            $transfer = $this->transfers->get($event->transferId());
+            $this->transfers->set(
+                $event->transferId(),
+                $transfer->transferIn($this->deposit, $this->clock)
+            );
         });
         $this->publisher->on(FailedToTransferFundsIn::class, function (FailedToTransferFundsIn $event) {
-            $this->refundSender($event->senderAccountId(), $event->funds()->amount());
+            $transfer = $this->transfers->get($event->transferId());
+            $this->transfers->set(
+                $event->transferId(),
+                $transfer->refund($this->deposit, $this->clock)
+            );
         });
-    }
-
-    private function transferFundsOut(string $senderAccountId, int $amount): void
-    {
-        ($this->withdraw)($senderAccountId, $amount);
-    }
-
-    private function transferFundsIn(string $recipientAccountId, int $amount): void
-    {
-        ($this->deposit)($recipientAccountId, $amount);
-    }
-
-    private function refundSender(string $senderAccountId, int $amount): void
-    {
-        ($this->deposit)($senderAccountId, $amount);
     }
 }

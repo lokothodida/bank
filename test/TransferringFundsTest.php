@@ -8,7 +8,9 @@ use lokothodida\Bank\Domain\Account;
 use lokothodida\Bank\Domain\Money;
 use lokothodida\Bank\Infrastructure\Clock\StaticClock;
 use lokothodida\Bank\Infrastructure\Publisher\InMemoryDomainEventPublisher;
+use lokothodida\Bank\Infrastructure\Storage\EventPublishingBankTransferRepository;
 use lokothodida\Bank\Infrastructure\Storage\InMemoryAccountRepository;
+use lokothodida\Bank\Infrastructure\Storage\InMemoryBankTransferRepository;
 use lokothodida\Bank\TransferFundsBetweenAccounts;
 use lokothodida\Bank\WithdrawFromAccount;
 use PHPUnit\Framework\TestCase;
@@ -27,11 +29,13 @@ final class TransferringFundsTest extends TestCase
         $accounts->set('recipient-account-id', Account::open('recipient-account-id', 'c2', $now));
 
         $clock = new StaticClock($now);
+        $publisher = new InMemoryDomainEventPublisher();
         $command = new TransferFundsBetweenAccounts(
             new WithdrawFromAccount($accounts, $clock),
             new DepositIntoAccount($accounts, $clock),
             $clock,
-            new InMemoryDomainEventPublisher(),
+            $publisher,
+            new EventPublishingBankTransferRepository(new InMemoryBankTransferRepository(), $publisher),
         );
         $command('sender-account-id', 'recipient-account-id', 25);
 
@@ -39,13 +43,15 @@ final class TransferringFundsTest extends TestCase
             Account::open('sender-account-id', 'c1', $now)
                 ->deposit(new Money(50), $now)
                 ->withdraw(new Money(25), $now),
-            $accounts->get('sender-account-id')
+            $accounts->get('sender-account-id'),
+            'Sender account does not have correct funds'
         );
 
         $this->assertEquals(
             Account::open('recipient-account-id', 'c2', $now)
                 ->deposit(new Money(25), $now),
-            $accounts->get('recipient-account-id')
+            $accounts->get('recipient-account-id'),
+            'Recipient account does not have correct funds'
         );
     }
 
@@ -65,11 +71,13 @@ final class TransferringFundsTest extends TestCase
         );
 
         $clock = new StaticClock($now);
+        $publisher = new InMemoryDomainEventPublisher();
         $command = new TransferFundsBetweenAccounts(
             new WithdrawFromAccount($accounts, $clock),
             new DepositIntoAccount($accounts, $clock),
             $clock,
-            new InMemoryDomainEventPublisher(),
+            $publisher,
+            new EventPublishingBankTransferRepository(new InMemoryBankTransferRepository(), $publisher),
         );
         $command('sender-account-id', 'recipient-account-id', 25);
 
@@ -78,13 +86,15 @@ final class TransferringFundsTest extends TestCase
                 ->deposit(new Money(50), $now)
                 ->withdraw(new Money(25), $now)
                 ->deposit(new Money(25), $now),
-            $accounts->get('sender-account-id')
+            $accounts->get('sender-account-id'),
+            'Sender account does not have correct funds'
         );
 
         $this->assertEquals(
             Account::open('recipient-account-id', 'c2', $now)
                 ->close($now),
-            $accounts->get('recipient-account-id')
+            $accounts->get('recipient-account-id'),
+            'Recipient account does not have correct funds'
         );
     }
 }

@@ -1,12 +1,13 @@
 <?php
 
+
 namespace lokothodida\Bank\Domain\Event;
 
 use DateTimeInterface;
 use lokothodida\Bank\Domain\Event;
 use lokothodida\Bank\Domain\Money;
 
-final class BankTransferInitiated extends Event
+class BankTransferCompleted extends Event
 {
     private string $transferId;
     private string $senderAccountId;
