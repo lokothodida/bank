@@ -3,6 +3,7 @@
 namespace lokothodida\Bank\Query;
 
 use lokothodida\Bank\Query\Exception\AccountNotFound;
+use lokothodida\Bank\Query\Model\Transaction;
 
 interface GetTransactions
 {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace lokothodida\Bank\Query;
+namespace lokothodida\Bank\Query\Model;
 
 final class Transaction
 {

@@ -7,7 +7,7 @@ use lokothodida\Bank\Domain\AccountRepository;
 use lokothodida\Bank\Domain\Event;
 use lokothodida\Bank\Domain\Event\AccountOpened;
 use lokothodida\Bank\Infrastructure\Publisher\EventPublisher;
-use lokothodida\Bank\Query\Account as AccountView;
+use lokothodida\Bank\Query\Model\Account as AccountView;
 use lokothodida\Bank\Query\Exception\CustomerNotFound;
 use lokothodida\Bank\Query\GetAccounts;
 

@@ -5,7 +5,7 @@ namespace lokothodida\Bank\Infrastructure\Storage;
 
 use lokothodida\Bank\Domain\Event;
 use lokothodida\Bank\Infrastructure\Publisher\EventPublisher;
-use lokothodida\Bank\Query\AccountBalance;
+use lokothodida\Bank\Query\Model\AccountBalance;
 use lokothodida\Bank\Query\Exception\AccountNotFound;
 use lokothodida\Bank\Query\GetAccountBalance;
 use lokothodida\Bank\Domain\Event\AccountOpened;

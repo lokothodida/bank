@@ -9,7 +9,7 @@ use lokothodida\Bank\Query\GetTransactions;
 use lokothodida\Bank\Domain\Event\AccountOpened;
 use lokothodida\Bank\Domain\Event\FundsDeposited;
 use lokothodida\Bank\Domain\Event\FundsWithdrawn;
-use lokothodida\Bank\Query\Transaction;
+use lokothodida\Bank\Query\Model\Transaction;
 
 final class InMemoryGetTransactions implements GetTransactions, EventPublisher
 {

@@ -4,6 +4,7 @@
 namespace lokothodida\Bank\Query;
 
 use lokothodida\Bank\Query\Exception\CustomerNotFound;
+use lokothodida\Bank\Query\Model\Account;
 
 interface GetAccounts
 {
