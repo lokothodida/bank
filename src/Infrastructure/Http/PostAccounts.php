@@ -1,6 +1,6 @@
 <?php
 
-namespace lokothodida\Bank\Http;
+namespace lokothodida\Bank\Infrastructure\Http;
 
 use lokothodida\Bank\OpenAccount;
 use Psr\Http\Message\ResponseInterface as Response;

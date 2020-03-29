@@ -1,20 +1,20 @@
 <?php
 
-namespace lokothodida\Bank\Http;
+namespace lokothodida\Bank\Infrastructure\Http;
 
-use lokothodida\Bank\WithdrawFromAccount;
+use lokothodida\Bank\DepositIntoAccount;
 use lokothodida\Bank\Domain\Exception\AccountNotFound;
 use lokothodida\Bank\Domain\Exception\DomainException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-final class PostAccountWithdrawal
+final class PostAccountDeposit
 {
-    private WithdrawFromAccount $withdrawFromAccount;
+    private DepositIntoAccount $depositIntoAccount;
 
-    public function __construct(WithdrawFromAccount $withdrawFromAccount)
+    public function __construct(DepositIntoAccount $depositIntoAccount)
     {
-        $this->withdrawFromAccount = $withdrawFromAccount;
+        $this->depositIntoAccount = $depositIntoAccount;
     }
 
     /**
@@ -28,7 +28,7 @@ final class PostAccountWithdrawal
         $requestBody = json_decode($request->getBody()->getContents());
 
         try {
-            ($this->withdrawFromAccount)($args['accountId'], $requestBody->amount);
+            ($this->depositIntoAccount)($args['accountId'], $requestBody->amount);
             $status = 200;
             $body = [
                 'message' => 'success',
@@ -36,7 +36,7 @@ final class PostAccountWithdrawal
         } catch (AccountNotFound $e) {
             $status = 404;
             $body = [
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ];
         } catch (DomainException $e) {
             $status = 422;

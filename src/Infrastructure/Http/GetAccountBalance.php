@@ -1,6 +1,6 @@
 <?php
 
-namespace lokothodida\Bank\Http;
+namespace lokothodida\Bank\Infrastructure\Http;
 
 use lokothodida\Bank\Query\Exception\AccountNotFound;
 use lokothodida\Bank\Query\GetAccountBalance as GetAccountBalanceQuery;
