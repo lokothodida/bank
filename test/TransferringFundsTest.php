@@ -7,6 +7,7 @@ use lokothodida\Bank\DepositIntoAccount;
 use lokothodida\Bank\Domain\Account;
 use lokothodida\Bank\Domain\Money;
 use lokothodida\Bank\Infrastructure\Clock\StaticClock;
+use lokothodida\Bank\Infrastructure\Publisher\InMemoryDomainEventPublisher;
 use lokothodida\Bank\Infrastructure\Storage\InMemoryAccountRepository;
 use lokothodida\Bank\TransferFundsBetweenAccounts;
 use lokothodida\Bank\WithdrawFromAccount;
@@ -28,7 +29,9 @@ final class TransferringFundsTest extends TestCase
         $clock = new StaticClock($now);
         $command = new TransferFundsBetweenAccounts(
             new WithdrawFromAccount($accounts, $clock),
-            new DepositIntoAccount($accounts, $clock)
+            new DepositIntoAccount($accounts, $clock),
+            $clock,
+            new InMemoryDomainEventPublisher(),
         );
         $command('sender-account-id', 'recipient-account-id', 25);
 
@@ -64,7 +67,9 @@ final class TransferringFundsTest extends TestCase
         $clock = new StaticClock($now);
         $command = new TransferFundsBetweenAccounts(
             new WithdrawFromAccount($accounts, $clock),
-            new DepositIntoAccount($accounts, $clock)
+            new DepositIntoAccount($accounts, $clock),
+            $clock,
+            new InMemoryDomainEventPublisher(),
         );
         $command('sender-account-id', 'recipient-account-id', 25);
 
