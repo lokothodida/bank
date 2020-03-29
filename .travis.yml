@@ -1,7 +1,5 @@
 language: php
 php:
-    - '7.1'
-    - '7.2'
+    - '7.4'
 script:
-    - cd app && composer install && composer run test && cd ../
-    - cd sqlite-adapter && composer install && composer run test && cd ../
+    - composer install && composer test

@@ -1,31 +1,49 @@
-[![Build Status](https://travis-ci.org/lokothodida/bank.svg?branch=master)](https://travis-ci.org/lokothodida/bank)
-
 # Sample Banking App
-A small application and domain model for a banking
-system with the following actions:
+This is a small toy banking application designed to illustrate some software design concepts.
 
-* Open Account
-* Deposit Funds (into account)
-* Withdraw Funds (from account)
-* Transfer Funds (between accounts)
-* Freeze Account
+* [Domain driven design](https://en.wikipedia.org/wiki/Domain-driven_design) - the domain is a very crude, simplified look at a Bank that offers accounts.
+* [Clean/hexagonal architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) - the storage mechanism and web server are easily replaceable - they are *plugins* to the main application.
+* [CQRS](https://martinfowler.com/bliki/CQRS.html) - application commands and queries are separated within the codebase.
+* [Event sourcing](https://www.youtube.com/watch?v=I3uH3iiiDqY) - events are persisted, rather than current state, meaning that current state is a projection of the stream of events.
+  There are multiple views of the same event store (e.g. `accounts`, `transactions`, `balance`).
 
-This is a toy project to play about with a few concepts:
+## Use cases
+- [x] Open an account
+- [x] Deposit funds into an account
+- [x] Withdraw funds from an account
+- [ ] Transfer funds between accounts
+- [x] Freeze/unfreeze an account (no more withdrawals)
+- [x] Close an account (no more deposits or withdrawals)
+- [x] View current balance
+- [x] View transaction history
+- [ ] View transfers
+- [ ] View transfer state
 
-- Domain driven design
-- Event sourcing
-- Immutable objects
-- Clean/hexagonal architecture
+## Quickstart
+### With docker
+1. Install dependencies
+    ```
+    make docker-build
+    ```
+2. Run the web server
+    ```
+    make docker-up
+    ```
 
-## Requirements
-- PHP 7.2+
+You can access the running container with
 
-## Installation
 ```
-cd app && composer install && cd ../
-cd sqlite-adapter && composer install && cd ../
+make docker-ssh
 ```
 
-## TODO
-- [x] Integrate Travis CI with the build
-- [ ] Create terminal UI app
+
+
+### Without docker
+1. Install dependencies
+    ```
+    composer install
+    ```
+2. Run the web server:
+    ```
+    php public/index.php
+    ```

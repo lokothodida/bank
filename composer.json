@@ -1,0 +1,38 @@
+{
+    "name": "lokothodida/bank",
+    "description": "A sample toy banking application",
+    "type": "project",
+    "require-dev": {
+        "phpunit/phpunit": "^9.0",
+        "phpstan/phpstan": "^0.12.18",
+        "friendsofphp/php-cs-fixer": "^2.16"
+    },
+    "authors": [
+        {
+            "name": "Lawrence Okoth-Odida",
+            "email": "lawrence.okothodida@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.0",
+        "react/event-loop": "^1.1",
+        "react/http": "^0.8.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "lokothodida\\Bank\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "lokothodida\\BankTest\\": "test"
+        }
+    },
+    "scripts": {
+        "test": [ "@static-analysis", "@unit-test" ],
+        "unit-test": [ "phpunit test -vv --testdox" ],
+        "static-analysis": [ "phpstan analyse src test --level=7" ],
+        "fmt": [ "php-cs-fixer fix src" ]
+    }
+}
