@@ -8,7 +8,6 @@ use lokothodida\Bank\Domain\Event\BankTransferCancelled;
 use lokothodida\Bank\Domain\Event\BankTransferCompleted;
 use lokothodida\Bank\Domain\Event\BankTransferInitiated;
 use lokothodida\Bank\Domain\Event\FailedToTransferFundsIn;
-use lokothodida\Bank\Domain\Event\FailedToTransferFundsOut;
 use lokothodida\Bank\Domain\Event\FundsTransferredOut;
 use lokothodida\Bank\WithdrawFromAccount;
 
@@ -49,7 +48,7 @@ final class BankTransfer
         $initiated = $this->initiated();
         $withdraw($initiated->senderAccountId(), $initiated->funds()->amount());
         return new BankTransfer(
-            new FundsTransferredOut($initiated->transferId(), $initiated->senderAccountId(), $initiated->recipientAccountId(), $initiated->funds(), $clock->now()),
+            new FundsTransferredOut($initiated->transferId(), $clock->now()),
             ...$this->events
         );
     }
@@ -61,12 +60,12 @@ final class BankTransfer
             $deposit($initiated->recipientAccountId(), $initiated->funds()->amount());
 
             return new BankTransfer(
-                new BankTransferCompleted($initiated->transferId(), $initiated->senderAccountId(), $initiated->recipientAccountId(), $initiated->funds(), $clock->now()),
+                new BankTransferCompleted($initiated->transferId(), $clock->now()),
                 ...$this->events
             );
         } catch (\Exception $e) {
             return new BankTransfer(
-                new FailedToTransferFundsIn($initiated->transferId(), $initiated->senderAccountId(), $initiated->recipientAccountId(), $initiated->funds(), $clock->now()),
+                new FailedToTransferFundsIn($initiated->transferId(), $clock->now()),
                 ...$this->events
             );
         }
@@ -78,7 +77,7 @@ final class BankTransfer
         $deposit($initiated->senderAccountId(), $initiated->funds()->amount());
 
         return new BankTransfer(
-            new BankTransferCancelled($initiated->transferId(), $initiated->senderAccountId(), $initiated->recipientAccountId(), $initiated->funds(), $clock->now()),
+            new BankTransferCancelled($initiated->transferId(), $clock->now()),
             ...$this->events
         );
     }
