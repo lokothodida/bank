@@ -1,11 +1,11 @@
 <?php
 
-namespace lokothodida\Bank\Command;
+namespace lokothodida\Bank;
 
 use lokothodida\Bank\Domain\AccountRepository;
 use lokothodida\Bank\Domain\Clock;
 
-final class FreezeAccount
+final class UnfreezeAccount
 {
     private AccountRepository $accounts;
     private Clock $clock;
@@ -20,7 +20,7 @@ final class FreezeAccount
     {
         $this->accounts->set(
             $accountId,
-            $this->accounts->get($accountId)->freeze($this->clock->now())
+            $this->accounts->get($accountId)->unfreeze($this->clock->now())
         );
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace lokothodida\Bank\Http;
+namespace lokothodida\Bank\Infrastructure\Http;
 
-use lokothodida\Bank\Command\WithdrawFromAccount;
+use lokothodida\Bank\WithdrawFromAccount;
 use lokothodida\Bank\Domain\Exception\AccountNotFound;
 use lokothodida\Bank\Domain\Exception\DomainException;
 use Psr\Http\Message\ResponseInterface as Response;

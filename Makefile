@@ -20,4 +20,9 @@ docker-test:
 
 .PHONY: test
 test:
-	composer run test
+	composer test
+
+fmt:
+	composer fmt
+
+suite: fmt test

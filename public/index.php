@@ -1,14 +1,14 @@
 <?php
 
-use lokothodida\Bank\Command\DepositIntoAccount;
-use lokothodida\Bank\Command\OpenAccount;
-use lokothodida\Bank\Command\WithdrawFromAccount;
-use lokothodida\Bank\Http\GetAccountBalance;
-use lokothodida\Bank\Http\GetAccounts;
-use lokothodida\Bank\Http\GetAccountTransactions;
-use lokothodida\Bank\Http\PostAccountDeposit;
-use lokothodida\Bank\Http\PostAccounts;
-use lokothodida\Bank\Http\PostAccountWithdrawal;
+use lokothodida\Bank\DepositIntoAccount;
+use lokothodida\Bank\OpenAccount;
+use lokothodida\Bank\WithdrawFromAccount;
+use lokothodida\Bank\Infrastructure\Http\GetAccountBalance;
+use lokothodida\Bank\Infrastructure\Http\GetAccounts;
+use lokothodida\Bank\Infrastructure\Http\GetAccountTransactions;
+use lokothodida\Bank\Infrastructure\Http\PostAccountDeposit;
+use lokothodida\Bank\Infrastructure\Http\PostAccounts;
+use lokothodida\Bank\Infrastructure\Http\PostAccountWithdrawal;
 use lokothodida\Bank\Infrastructure\Clock\LocalClock;
 use lokothodida\Bank\Infrastructure\Publisher\CombinedEventPublisher;
 use lokothodida\Bank\Infrastructure\Storage\EventPublishingAccountRepository;

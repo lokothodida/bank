@@ -1,14 +1,14 @@
 <?php
 
-namespace lokothodida\BankTest\Command;
+namespace lokothodida\BankTest;
 
 use DateTimeImmutable;
-use lokothodida\Bank\Command\CloseAccount;
-use lokothodida\Bank\Command\DepositIntoAccount;
-use lokothodida\Bank\Command\FreezeAccount;
-use lokothodida\Bank\Command\OpenAccount;
-use lokothodida\Bank\Command\UnfreezeAccount;
-use lokothodida\Bank\Command\WithdrawFromAccount;
+use lokothodida\Bank\CloseAccount;
+use lokothodida\Bank\DepositIntoAccount;
+use lokothodida\Bank\FreezeAccount;
+use lokothodida\Bank\OpenAccount;
+use lokothodida\Bank\UnfreezeAccount;
+use lokothodida\Bank\WithdrawFromAccount;
 use lokothodida\Bank\Domain\Account;
 use lokothodida\Bank\Domain\Event\AccountClosed;
 use lokothodida\Bank\Domain\Event\AccountFrozen;
