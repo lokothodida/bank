@@ -2,7 +2,7 @@
 
 namespace lokothodida\Bank\Http;
 
-use lokothodida\Bank\Command\OpenAccount;
+use lokothodida\Bank\OpenAccount;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 

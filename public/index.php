@@ -1,8 +1,8 @@
 <?php
 
-use lokothodida\Bank\Command\DepositIntoAccount;
-use lokothodida\Bank\Command\OpenAccount;
-use lokothodida\Bank\Command\WithdrawFromAccount;
+use lokothodida\Bank\DepositIntoAccount;
+use lokothodida\Bank\OpenAccount;
+use lokothodida\Bank\WithdrawFromAccount;
 use lokothodida\Bank\Http\GetAccountBalance;
 use lokothodida\Bank\Http\GetAccounts;
 use lokothodida\Bank\Http\GetAccountTransactions;

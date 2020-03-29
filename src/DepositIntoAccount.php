@@ -1,6 +1,6 @@
 <?php
 
-namespace lokothodida\Bank\Command;
+namespace lokothodida\Bank;
 
 use lokothodida\Bank\Domain\AccountRepository;
 use lokothodida\Bank\Domain\Clock;

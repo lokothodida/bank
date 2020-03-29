@@ -1,12 +1,11 @@
 <?php
 
-namespace lokothodida\Bank\Command;
+namespace lokothodida\Bank;
 
 use lokothodida\Bank\Domain\AccountRepository;
 use lokothodida\Bank\Domain\Clock;
-use lokothodida\Bank\Domain\Money;
 
-final class WithdrawFromAccount
+final class CloseAccount
 {
     private AccountRepository $accounts;
     private Clock $clock;
@@ -17,11 +16,11 @@ final class WithdrawFromAccount
         $this->clock = $clock;
     }
 
-    public function __invoke(string $accountId, int $amount): void
+    public function __invoke(string $accountId): void
     {
         $this->accounts->set(
             $accountId,
-            $this->accounts->get($accountId)->withdraw(new Money($amount), $this->clock->now())
+            $this->accounts->get($accountId)->close($this->clock->now())
         );
     }
 }

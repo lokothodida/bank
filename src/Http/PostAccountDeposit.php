@@ -2,7 +2,7 @@
 
 namespace lokothodida\Bank\Http;
 
-use lokothodida\Bank\Command\DepositIntoAccount;
+use lokothodida\Bank\DepositIntoAccount;
 use lokothodida\Bank\Domain\Exception\AccountNotFound;
 use lokothodida\Bank\Domain\Exception\DomainException;
 use Psr\Http\Message\ResponseInterface as Response;
